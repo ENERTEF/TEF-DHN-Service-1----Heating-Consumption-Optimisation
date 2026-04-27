@@ -14,17 +14,23 @@ This service focuses on optimising thermal energy consumption in district heatin
 * **District level** (boiler rooms)
 * **Building level** (substations)
 
-The core idea is to analyse **historical and near-real-time operational data** to:
+The service analyses **historical and near-real-time operational data** to:
 
 * Identify inefficiencies
 * Detect energy losses
-* Highlight suboptimal operating conditions
+* Reveal suboptimal operating conditions
 
-By doing so, the service helps operators:
+It combines **data-driven analysis and AI-based models** to:
 
-* Reduce unnecessary heat production
-* Improve boiler performance
-* Better balance heat supply and demand
+* Improve system performance
+* Reduce energy consumption
+* Support operational decision-making
+
+By analysing consumption patterns together with **external temperature and operational context**, the service enables:
+
+* More efficient control strategies
+* Demand-side optimisation
+* Better system balancing
 
 ---
 
@@ -34,12 +40,13 @@ By doing so, the service helps operators:
   Buildings managed by Veolia.
 
 * **Energy Consumption**
-  Total energy consumption per building, monitored and expressed through:
+  Total thermal energy consumption of buildings, including:
 
-  * Thermal power (space heating and DHW)
+  * Space heating
+  * Domestic hot water (DHW)
   * Supply and return temperatures
-  * Flow rate (caudal)
-  * Valve position
+  * Flow rates (caudal)
+  * Valve positions
 
 * **Resolution / Granularity**
   Data is analysed at **15-minute intervals**.
@@ -48,35 +55,49 @@ By doing so, the service helps operators:
 
 ## 1.1 Veolia Context
 
-Veolia uses the **Torrelago district heating network** as a real operational testbed for developing and validating AI-based optimisation services.
+Veolia uses the **Torrelago district heating network** as a real-world environment to:
 
-Using both:
+* Develop
+* Test
+* Validate
 
-* Historical data
-* Near-real-time measurements
+AI-based optimisation services.
 
-the service aims to:
+The network consists of:
 
-* Identify inefficiencies
-* Reduce overall heat consumption
-* Improve thermal performance across the network
+* Centralised heat production (boiler rooms)
+* Distributed building substations
 
-Key optimisation goals include:
+---
 
-* Better production control
-* Reduction of heat losses
-* Improved balance between **biomass and gas boilers**
+### Operational Goals
+
+* Reduce total heat consumption
+* Improve boiler efficiency
+* Minimise energy losses
+* Balance **biomass and gas boiler usage**
+
+---
+
+### Practical Use
+
+The service:
+
+* Detects abnormal consumption peaks
+* Identifies inefficient behaviours such as:
+
+  * High return temperatures
+  * Excessive consumption during mild weather
+* Provides actionable insights for operators
 
 ---
 
 ## 2. Problem Statement
 
-The objective of this service is to optimise heat consumption and production across a district heating network.
-
-This is achieved by analysing:
+The goal is to optimise heat consumption and production by analysing:
 
 * Historical data
-* Near-real-time operational data
+* Near real-time operational data
 
 from:
 
@@ -89,14 +110,15 @@ from:
 
 The service:
 
-* Estimates **baseline thermal consumption profiles** under normal conditions
-* Detects inefficiencies and abnormal usage patterns
+* Estimates **baseline thermal consumption profiles**
+* Detects deviations from expected behaviour
+* Identifies inefficiencies and optimisation opportunities
 
 ---
 
 ### Inputs
 
-* Heat energy consumption measurements
+* Heat energy consumption
 * Fuel usage
 * Supply and return temperatures
 * Weather data
@@ -104,34 +126,28 @@ The service:
 All inputs are:
 
 * Time-aligned
-* Standardised to a common resolution
+* Standardised
 
 ---
 
-### User Impact
+### End-User Value
 
-The service also enables **building residents** to:
+The service enables:
 
-* Understand their consumption patterns
-* Identify high-demand periods
-* Adjust usage behaviour
-
-This leads to:
-
-* Improved comfort
-* Reduced energy costs
+* Operators → optimise system performance
+* Residents → reduce consumption and costs
 
 ---
 
 ## 3. Data Description
 
-The available dataset portfolio includes multiple groups of variables covering:
+The dataset includes:
 
-* Operational energy
-* Substation consumption
-* Hydraulic behaviour
-* Temperature conditions
-* Control settings
+* Operational variables
+* Substation consumption data
+* Hydraulic variables
+* Temperature measurements
+* Control signals
 
 ---
 
@@ -139,59 +155,59 @@ The available dataset portfolio includes multiple groups of variables covering:
 
 ### Operation and Energy Variables
 
-| Variable                           | Variable name                | Type  | Unit | Description                                | Example    |
-| ---------------------------------- | ---------------------------- | ----- | ---- | ------------------------------------------ | ---------- |
-| General water meter                | central_water_meter          | Float | m³   | Total water consumption at central plant   | 6.00       |
-| Boiler 1 energy counter            | boiler1_energy_counter       | Float | kWh  | Energy produced by boiler 1                | 17,147.01  |
-| Boiler 2 energy counter            | boiler2_energy_counter       | Float | kWh  | Energy produced by boiler 2                | 20,638.85  |
-| Boiler 3 energy counter            | boiler3_energy_counter       | Float | kWh  | Energy produced by boiler 3                | 22,881.29  |
-| Gas boilers energy (15 min)        | gas_boilers_energy_15min     | Float | kWh  | Gas boiler production at 15-min resolution | 27,414.70  |
-| Corrected gas counter              | corrected_gas_counter        | Float | Nm³  | Natural gas consumption                    | 21,962,436 |
-| Central electricity meter (15 min) | central_electric_meter_15min | Float | kWh  | Central plant electricity consumption      | 19,404.00  |
-| Phase 1 energy counter             | phase1_energy_counter        | Float | kWh  | Phase 1 energy consumption                 | 39,031.50  |
-| Phase 2 energy counter             | phase2_energy_counter        | Float | kWh  | Phase 2 energy consumption                 | 25,587.50  |
+| Variable                    | Variable name                | Type  | Unit | Description                      | Example    |
+| --------------------------- | ---------------------------- | ----- | ---- | -------------------------------- | ---------- |
+| General water meter         | central_water_meter          | Float | m³   | Total water consumption at plant | 6.00       |
+| Boiler 1 energy counter     | boiler1_energy_counter       | Float | kWh  | Boiler 1 energy                  | 17,147.01  |
+| Boiler 2 energy counter     | boiler2_energy_counter       | Float | kWh  | Boiler 2 energy                  | 20,638.85  |
+| Boiler 3 energy counter     | boiler3_energy_counter       | Float | kWh  | Boiler 3 energy                  | 22,881.29  |
+| Gas boilers energy (15 min) | gas_boilers_energy_15min     | Float | kWh  | Gas boiler energy                | 27,414.70  |
+| Corrected gas counter       | corrected_gas_counter        | Float | Nm³  | Gas consumption                  | 21,962,436 |
+| Central electricity meter   | central_electric_meter_15min | Float | kWh  | Electricity usage                | 19,404.00  |
+| Phase 1 energy              | phase1_energy_counter        | Float | kWh  | Phase 1 consumption              | 39,031.50  |
+| Phase 2 energy              | phase2_energy_counter        | Float | kWh  | Phase 2 consumption              | 25,587.50  |
 
 ---
 
-### Substation Energy Consumption Variables
+### Substation Energy Consumption
 
-| Variable                     | Variable name             | Type  | Unit | Description                       | Example  |
-| ---------------------------- | ------------------------- | ----- | ---- | --------------------------------- | -------- |
-| Heating energy substation    | heating_energy_substation | Float | kWh  | Heating consumption at substation | 1,928.79 |
-| DHW energy substation        | dhw_energy_substation     | Float | kWh  | Domestic hot water consumption    | 1,565.46 |
-| Heating energy (2nd circuit) | heating_energy_2nd        | Float | MWh  | Secondary circuit heating energy  | 1,998.16 |
+| Variable                     | Variable name             | Type  | Unit | Description         | Example  |
+| ---------------------------- | ------------------------- | ----- | ---- | ------------------- | -------- |
+| Heating energy               | heating_energy_substation | Float | kWh  | Heating consumption | 1,928.79 |
+| DHW energy                   | dhw_energy_substation     | Float | kWh  | DHW consumption     | 1,565.46 |
+| Heating energy (2nd circuit) | heating_energy_2nd        | Float | MWh  | Secondary circuit   | 1,998.16 |
 
 ---
 
 ### Hydraulic and Power Variables
 
-| Variable              | Variable name     | Type  | Unit | Description               | Example |
-| --------------------- | ----------------- | ----- | ---- | ------------------------- | ------- |
-| Heating flow rate     | heating_flow_rate | Float | m³/h | Heating circuit flow rate | 11.88   |
-| DHW flow rate         | dhw_flow_rate     | Float | m³/h | DHW flow rate             | 5.40    |
-| Heating thermal power | heating_power     | Float | kW   | Heating power             | 169.20  |
-| DHW thermal power     | dhw_power         | Float | kW   | DHW power                 | 0.40    |
+| Variable          | Variable name     | Type  | Unit | Description   | Example |
+| ----------------- | ----------------- | ----- | ---- | ------------- | ------- |
+| Heating flow rate | heating_flow_rate | Float | m³/h | Flow rate     | 11.88   |
+| DHW flow rate     | dhw_flow_rate     | Float | m³/h | DHW flow      | 5.40    |
+| Heating power     | heating_power     | Float | kW   | Thermal power | 169.20  |
+| DHW power         | dhw_power         | Float | kW   | DHW power     | 0.40    |
 
 ---
 
 ### Temperature Variables
 
-| Variable                   | Variable name         | Type  | Unit | Description                | Example |
-| -------------------------- | --------------------- | ----- | ---- | -------------------------- | ------- |
-| Heating supply temperature | heating_supply_temp   | Float | °C   | Heating supply temperature | 63.89   |
-| Heating return temperature | heating_return_temp   | Float | °C   | Heating return temperature | 52.06   |
-| DHW supply temperature     | dhw_supply_temp       | Float | °C   | DHW supply temperature     | 76.46   |
-| DHW return temperature     | dhw_return_temp       | Float | °C   | DHW return temperature     | 46.98   |
-| Temperature setpoint       | heating_temp_setpoint | Float | °C   | Heating setpoint           | 65.00   |
+| Variable       | Variable name         | Type  | Unit | Description | Example |
+| -------------- | --------------------- | ----- | ---- | ----------- | ------- |
+| Heating supply | heating_supply_temp   | Float | °C   | Supply temp | 63.89   |
+| Heating return | heating_return_temp   | Float | °C   | Return temp | 52.06   |
+| DHW supply     | dhw_supply_temp       | Float | °C   | DHW supply  | 76.46   |
+| DHW return     | dhw_return_temp       | Float | °C   | DHW return  | 46.98   |
+| Setpoint       | heating_temp_setpoint | Float | °C   | Setpoint    | 65.00   |
 
 ---
 
 ### Control Variables
 
-| Variable         | Variable name  | Type  | Unit | Description              | Example |
-| ---------------- | -------------- | ----- | ---- | ------------------------ | ------- |
-| Valve regulation | valve_position | Float | %    | Valve opening percentage | 99.51   |
-| Pump regulation  | pump_speed     | Float | %    | Pump speed               | 94.96   |
+| Variable       | Variable name  | Type  | Unit | Description     | Example |
+| -------------- | -------------- | ----- | ---- | --------------- | ------- |
+| Valve position | valve_position | Float | %    | Valve opening   | 99.51   |
+| Pump speed     | pump_speed     | Float | %    | Pump regulation | 94.96   |
 
 ---
 
@@ -199,48 +215,91 @@ The available dataset portfolio includes multiple groups of variables covering:
 
 ### Temporal Scope
 
-* Based on **rolling historical data (up to 5 years)**
-* Updated as new data becomes available
+* Uses **up to 5 years of historical data (2020–2024)**
+* Rolling analysis
 
 ---
 
 ### Update Frequency
 
-* Results refreshed **every 15 minutes**
+* Every **15 minutes**
 
 ---
 
-### Inputs
+### Analytical Approach
 
-* JSON via REST API including:
+The service follows a structured pipeline:
 
-  * Historical consumption data
-  * Production schedules
-  * Weather forecasts
-  * Forecast request parameters
+#### 1. Baseline Modelling
+
+* Establishes normal consumption patterns by:
+
+  * Season
+  * Day of week
+  * Operating conditions
+
+---
+
+#### 2. Contextual Peak Detection
+
+* Uses rolling windows (e.g., 7-day)
+* Detects anomalies relative to local behaviour
+* Avoids fixed thresholds
+
+---
+
+#### 3. Correlation Analysis
+
+* Links consumption to:
+
+  * Outdoor temperature
+* Identifies inefficiencies:
+
+  * High demand during mild conditions
+
+---
+
+#### 4. AI-Based Modelling
+
+* Techniques:
+
+  * LSTM
+  * XGBoost
+
+Used for:
+
+* Pattern detection
+* Operational segmentation
+* Inefficiency identification
 
 ---
 
 ### Outputs
 
-* JSON via REST API including:
-
-  * Time-series forecasts
-  * Point predictions
-  * Prediction intervals
-  * Peak demand predictions
-  * Cost impact estimates
+* Anomalous consumption peaks
+* Years with abnormal behaviour
+* Estimated optimisation potential
+* Energy consumption forecasts
 
 ---
 
-### Output Format
+### API Input / Output
 
-For each substation (**31 buildings**), outputs include:
+#### Input
 
-* Date of data
-* Data storage endpoint
-* Data ID
-* Structured indicators (consumption, forecasts, etc.)
+JSON via REST API:
+
+* Historical data
+* Weather forecasts
+* Production schedules
+
+#### Output
+
+JSON:
+
+* Time-series forecasts
+* Peak demand predictions
+* Cost impact estimates
 
 ---
 
@@ -248,80 +307,97 @@ For each substation (**31 buildings**), outputs include:
 
 ### 5.1 Data Usage & Analytical Protocol
 
-(Not explicitly defined — to be specified during implementation)
+* Backtesting on historical data
+* Comparison against known patterns
 
 ---
 
 ### 5.2 Data Gaps and Exceptions
 
-(Not explicitly defined — to be specified during implementation)
+* Missing/invalid data handled explicitly
+* Impact reflected in evaluation
 
 ---
 
-### 5.3 Service Evaluation Metrics & KPIs
+### 5.3 KPIs
 
-* **Model accuracy**
-  → % similarity between real and simulated behaviour
+* Model accuracy (% similarity real vs simulated)
+* Simulation processing time
+* Peak detection accuracy
+* False positive reduction
+* Recurring anomaly detection
 
-* **Processing time**
-  → Simulation runtime (seconds/minutes)
+---
+
+### Impact Evaluation
+
+* Estimated energy savings
+* Comparison vs baseline operation
+* Identification of inefficiency drivers
 
 ---
 
 ## 6. Deliverables & Submissions
 
-*(General deliverables not fully defined in this version)*
+### 6.1 Reports
+
+1. Pre-Service Report
+2. Intermediate Report
+3. Final Report
 
 ---
 
-## 6.2 Technical Specifications & Submissions
+## 6.2 Technical Specifications
 
-### Service Interface Documentation
+### Data Access
 
-Veolia provides controlled access to data via:
-
-#### Historical Data
-
-* CSV format
-* 15-minute granularity
+* CSV (historical data, 15-min resolution)
+* CLIDi REST API
 
 ---
 
-#### CLIDi REST API
+### API Details
 
-* Response format: JSON
-* Authentication: project-specific credentials
-
-Access modes:
-
-* Internal API (via dedicated VM)
-* External API (IP-restricted / whitelisted)
+* JSON responses
+* Authentication via credentials
+* Internal VM or IP-restricted access
 
 ---
 
-### Deployment Artefacts
+### Deployment
 
-* Deployment approach defined by provider
-* Alternative models must be documented
-
----
-
-### Configuration, Versioning & Handover
-
-Includes:
-
-* API manual (EN/ES) in PDF
-* Project-specific credentials
-* Postman JSON collection
-* Deployment description
-* Technical onboarding session (if needed)
+* Defined by provider
+* Multiple deployment options supported
 
 ---
 
-### Security & Data Protection
+### Handover
 
-* Controlled dataset export
-* Data shared only within project scope
-* Strict usage restrictions
+* API manual (EN/ES)
+* Postman collection
+* Credentials
+* Onboarding session
 
 ---
+
+### Security
+
+* Controlled data sharing
+* Project-only usage
+* No external redistribution
+
+---
+
+## Implementation & Availability
+
+* Developed in **Jupyter Lab**
+* Currently used for **offline analysis**
+* Designed for future integration into **EnerTEF platform**
+
+---
+
+### Integration Vision
+
+* Connected via Data Space
+* Accessible via APIs or platform UI
+
